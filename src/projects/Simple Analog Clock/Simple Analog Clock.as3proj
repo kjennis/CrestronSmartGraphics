@@ -16,7 +16,7 @@
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="src" />
-    <class path="..\..\..\..\..\Crestron\Smart Graphics\Affinity Branch" />
+    <class path="..\..\..\..\..\sdk2.03\src" />
   </classpaths>
   <!-- Build options -->
   <build>
@@ -85,13 +85,13 @@
   <preBuildCommand />
   <!-- Executed after build -->
   <postBuildCommand alwaysRun="False">c:\windows\system32\cmd.exe /C cd "$(ProjectDir)" 
-python Test.py
-python CustomDeploy.py</postBuildCommand>
+python test.py
+python local_deploy.py</postBuildCommand>
   <!-- Other project options -->
   <options>
     <option showHiddenPaths="False" />
     <option testMovie="Custom" />
-    <option testMovieCommand="c:\windows\system32\cmd.exe /C &quot;C:\Crestron\Smart Graphics\TEST\Test\swf\Container.swf&quot;" />
+    <option testMovieCommand="c:\windows\system32\cmd.exe /C &quot;C:\Users\kjennis\Documents\GitHub\CrestronSmartGraphics\src\projects\Simple Analog Clock\test\test\swf\Container.swf&quot;" />
   </options>
   <!-- Plugin storage -->
   <storage>

@@ -36,7 +36,7 @@ if not os.path.isfile(binPath + swfName):
 	print (swfName + ".swf was not found... looking for other SWF files")
 	
 	swfName = ""
-	
+	input("Press enter to continue... ")
 	#for subdir, dirs, files in os.walk(binPath):
 	#	for file in files:
 	#		fileName, fileExt = os.path.splitext(file)
