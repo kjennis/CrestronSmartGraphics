@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<!-- 
+	This file serves as the default properties for a given control in Crestron Smart Graphics.
+	The design tools will read this file to find the location of the appropriate XSD, Thumbnail, and SWF files.
+	
+	*Note: ALL OF THE TAGS IN THIS FILE ARE REQUIRED.*
+-->
+<root>
+	<!-- 
+		IsRSL:
+			Tells the compiler whether or not the control is part of a Resource Shared Library (RSL).
+			If the control is part of a RSL, the value should be TRUE, if it is a stand-alone SWF the value should be FALSE.			
+	-->
+	<IsRSL>False</IsRSL>
+	<!-- 
+		ParentSWF:
+			Tells the compiler what RSL file to find the class name in (set in TargetControl).
+			This is only used when the IsRSL tag is set to TRUE. 			
+	-->
+	<ParentSWF>RSLName.swf</ParentSWF>
+	<!-- 
+		TargetControl:
+			If using an RSL (see tags above) the TargetControl tells the compiler what class name to instantiate.
+			If not using an RSL, this will point to the SWF file to be instantiated.			
+	-->
+	<TargetControl>rgbaShape.swf</TargetControl>
+	<!-- 
+		TargetXSD:
+			This is the name of the XSD that defines this controls properties for the property grid
+	-->
+	<TargetXSD>rgbaShape.xsd</TargetXSD>
+	<!-- 
+		CategoryName:
+			This tells the design tools what category to display the control under in the Core 3 UI Control Browser
+	-->
+	<CategoryName>Custom</CategoryName>
+	<!-- 
+		ControlName:
+			This is the user-facing name in the Core 3 UI Control Browser.  
+	-->
+	<ControlName>RGBA Shape</ControlName>
+	<!-- 
+		Thumbnail:
+			The thumbnail image name (including file extension) to be displayed for this control in the 
+			Core 3 UI Control Browser.  If no image is present, the default Core 3 UI icon will be used.
+	-->
+	<Thumbnail>ControlName.png</Thumbnail>
+	<!-- 
+		MinContainerVersion:
+			The minimum container version required by this control.  
+	-->
+	<MinContainerVersion>0.1</MinContainerVersion>
+	<!-- 
+		MinFlashVersion:
+			The minimum flash version required by this control.
+			FL4_1 represents Flash Lite 4.1 compatability.
+			F10_1 represents Flash 10.1+ compatability.
+			Valid options are:
+				FL4_1
+				F10_1
+				FL4_1|F10_1
+	-->
+	<MinFlashVersion>FL4_1|F10_1</MinFlashVersion>
+	<!-- 
+		EmbeddedAppSupport:
+			Contains an ID (if any) that tells the design tools what embedded application support 
+			is required for the particular touchpanel project.  The table of IDs and Applications
+			is listed below:
+			
+			ID	Applications Name
+			0	Microsoft Internet Explorer
+			1	Windows Media Player
+			2	WordPad
+			3	Adobe Reader
+			7	MediaMarker Notebook
+			10	Keyboard
+			13	Calibration
+			14	Microsoft Inbox
+			16	PowerPoint Viewer
+			17	Microsoft Word Viewer
+			18	Microsoft Excel Viewer
+			19	NetMeeting
+			21	Remote Desktop
+			22	Real Player
+			23	MJPEG Viewer
+			24	Microsoft Picture Manager
+			26	Skype
+			28	VNCViewer
+			29	VNCServer			
+	-->
+	<EmbeddedAppSupport />
+	<!-- 
+		EmbeddedVideoSupport:
+			Indicates whether or not the particular control or application requires embedded video support.
+	-->
+	<EmbeddedVideoSupport>false</EmbeddedVideoSupport>
+	<!-- 
+		VersionNumber:
+			This is the version number of the control, it should be incremented with every release.
+			For more information see http://en.wikipedia.org/wiki/Software_versioning
+	-->
+	<VersionNumber>0.0.01.00</VersionNumber>
+	<!-- 
+		Object_Name:
+			This is the objects name which is user-editable.  This enables the end-user to uniquely name 
+			individual instances of controls/applications.
+	-->
+	<Object_Name>Control Name</Object_Name>
+	<!-- 
+		Description:
+			This serves as the description of the control.  This property is also user-editable
+			which enables the user to write a proper description for each instance of the 
+			control/application.
+	-->
+	<Description>Description of Control</Description>
+	<!-- 
+		TemplateData:
+			Used by the design tools (specifically System Builder) to link signals and joins together.
+	-->
+	<TemplateData />
+	<!-- 
+		Properties:
+			Under no circumstances should you edit this tag.  It is required by the design tools and 
+			runtime container to parse and serve data to the objects.
+	-->
+	<Properties Type="ChildProperties">
+		<!-- 
+			PositionAndSize:
+				This set of properties contains the Width, Height, Top (Y), Left (X), ScaleX, and ScaleY properties.
+				When an object is first added to the stage, the Width and Height properties are used as the objects 
+				default size parameters.  By convention, most Crestron objects will default to 0, 0.  This 
+				acts as a flag for the object to assume its respective styles default size(s).
+		-->
+		<PositionAndSize Type="Locale">
+			<Width>200</Width>
+			<Height>200</Height>
+			<Top>0</Top>
+			<Left>0</Left>
+			<Z>1</Z>
+			<ScaleX>1.0</ScaleX>
+			<ScaleY>1.0</ScaleY>
+		</PositionAndSize>
+		
+		<Color>0xFFFFFF</Color>
+		<Alpha>1</Alpha>
+	</Properties>
+</root>

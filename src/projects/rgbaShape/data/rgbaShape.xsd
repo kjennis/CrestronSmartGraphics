@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<!-- 
+	This file serves as the default properties for a given control in Crestron Smart Graphics.
+	The design tools will read this file to find the location of the appropriate XSD, Thumbnail, and SWF files.
+	
+	*Note: ALL OF THE TAGS IN THIS FILE ARE REQUIRED.*
+-->
+    <xs:include schemaLocation=".\PropertyDef.xsd" />
+    <xs:element name="root">
+        <xs:complexType>
+            <xs:sequence>
+				<!-- 
+					IsRSL:
+						Tells the compiler whether or not the control is part of a Resource Shared Library (RSL).
+						If the control is part of a RSL, the value should be TRUE, if it is a stand-alone SWF the value should be FALSE.			
+				-->
+                <xs:element name="IsRSL" type="xs:boolean" hidden="true" readOnly="true"/>
+				<!-- 
+					ParentSWF:
+						Tells the compiler what RSL file to find the class name in (set in TargetControl).
+						This is only used when the IsRSL tag is set to TRUE. 			
+				-->
+                <xs:element name="ParentSWF" type="xs:string" hidden="true" readOnly="true"/>
+				<!-- 
+					TargetControl:
+						If using an RSL (see tags above) the TargetControl tells the compiler what class name to instantiate.
+						If not using an RSL, this will point to the SWF file to be instantiated.			
+				-->
+                <xs:element name="TargetControl" type="xs:string" hidden="true" readOnly="true"/>
+				<!-- 
+					TargetXSD:
+						This is the name of the XSD that defines this controls properties for the property grid
+				-->
+				<xs:element name="TargetXSD" type="xs:string" hidden="true" readOnly="true" doNotCompile="true" />
+				<!-- 
+					CategoryName:
+						This tells the design tools what category to display the control under in the Smart Graphics Control Browser
+				-->
+				<xs:element name="CategoryName" type="xs:string" title="Category Name" hidden="false" readOnly="true" doNotCompile="true"/>
+				<!-- 
+					ControlName:
+						This is the user-facing name in the Smart Graphics Browser.  
+				-->
+                <xs:element name="ControlName" type="xs:string" title="Control Name" hidden="true" readOnly="true"/>
+				<!-- 
+					Thumbnail:
+						The thumbnail image name (including file extension) to be displayed for this control in the 
+						Smart Graphics Control Browser.  If no image is present, the default Smart Graphics icon will be used.
+				-->
+                <xs:element name="Thumbnail" type="xs:string" hidden="true" readOnly="true" doNotCompile="true"/>
+				<!-- 
+					MinContainerVersion:
+						The minimum container version required by this control.  
+				-->
+                <xs:element name="VersionNumber" type="xs:string" hidden="false" readOnly="true"/>
+				<!-- 
+					MinFlashVersion:
+						The minimum flash version required by this control.
+						FL4_1 represents Flash Lite 4.1 compatability.
+						F10_1 represents Flash 10.1+ compatability.
+						Valid options are:
+							FL4_1
+							F10_1
+							FL4_1|F10_1
+				-->
+                <xs:element name="MinFlashVersion" type="xs:string" hidden="false" readOnly="true"/>
+				<!-- 
+					EmbeddedAppSupport:
+						Contains an ID (if any) that tells the design tools what embedded application support 
+						is required for the particular touchpanel project.  The table of IDs and Applications
+						is listed below:
+						
+						ID	Applications Name
+						0	Microsoft Internet Explorer
+						1	Windows Media Player
+						2	WordPad
+						3	Adobe Reader
+						7	MediaMarker Notebook
+						10	Keyboard
+						13	Calibration
+						14	Microsoft Inbox
+						16	PowerPoint Viewer
+						17	Microsoft Word Viewer
+						18	Microsoft Excel Viewer
+						19	NetMeeting
+						21	Remote Desktop
+						22	Real Player
+						23	MJPEG Viewer
+						24	Microsoft Picture Manager
+						26	Skype
+						28	VNCViewer
+						29	VNCServer			
+				-->
+                <xs:element name="EmbeddedAppSupport" type="xs:string" hidden="false" readOnly="true"/>				
+				<!-- 
+					EmbeddedVideoSupport:
+						Indicates whether or not the particular control or application requires embedded video support.
+				-->
+				<xs:element name="EmbeddedVideoSupport" type="xs:string" hidden="false" readOnly="true"/>
+				<!-- 
+					VersionNumber:
+						This is the version number of the control, it should be incremented with every release.
+						For more information see http://en.wikipedia.org/wiki/Software_versioning
+				-->
+				<xs:element name="Version" type="xs:string" hidden="false" readOnly="true"/>		
+				<!-- 
+					Object_Name:
+						This is the objects name which is user-editable.  This enables the end-user to uniquely name 
+						individual instances of controls/applications.
+				-->
+				<xs:element name="Object_Name" type="xs:string" hidden="false" readOnly="false"/>
+				<!-- 
+					Description:
+						This serves as the description of the control.  This property is also user-editable
+						which enables the user to write a proper description for each instance of the 
+						control/application.
+				-->
+				<xs:element name="Description" type="xs:string" hidden="false" readOnly="false"/>
+				<!-- 
+					TemplateData:
+						Used by the design tools (specifically System Builder) to link signals and joins together.
+				-->
+				<xs:element name="TemplateData" type="xs:string" title="Template Data" doNotCompile="true"/>
+				<!-- 
+					Properties:
+						Under no circumstances should you edit this tag.  It is required by the design tools and 
+						runtime container to parse and serve data to the objects.
+				-->
+				<xs:element name="Properties" type="Group" title="Properties" propertyType="ChildProperties">
+                    <xs:complexType>
+                        <xs:sequence>
+							<!-- 
+								PositionAndSize:
+									This set of properties contains the Width, Height, Top (Y), Left (X), ScaleX, and ScaleY properties.
+									When an object is first added to the stage, the Width and Height properties are used as the objects 
+									default size parameters.  By convention, most Crestron objects will default to 0, 0.  This 
+									acts as a flag for the object to assume its respective styles default size(s).
+							-->
+                            <xs:element name="PositionAndSize" type="Locale" title="Position and Size" canProgram="false" hidden="false" readOnly="false" propertyType="Locale" />
+                            <!-- 
+								*Insert the rest of your properties beginning here* 
+								
+								Each property has a variety of attributes available to it.
+								
+								REQUIRED:
+									name 	 		[STRING]	The name of the XML element to be generated
+									type 	 		[STRING]	The type of property.  This is how you differentiate between an integer, floating point, string, html text, etc.  
+																For more information about the different custom types available to you, please see PropertyDef.xsd.
+									title 			[STRING]	This is the display name, shown to the user in the property grid.
+								
+								OPTIONAL:
+									canProgram		[BOOL]		Tells the design tools if this property is able to be configured by System Builder.
+																Defaults to FALSE if not present.		
+									hidden			[BOOL]		Indicates whether or not to make this property visible to users in the property grid.
+																Defaults to FALSE if not present.	
+									readOnly		[BOOL]		Indicates whether or not this property is editable by the user.
+																Defaults to FALSE if not present.
+									doNotCompile	[BOOL]		Tells the compiler to include or exclude this property for runtime.
+																Defaults to FALSE if not present.
+																
+								SAMPLE PROPERTIES:
+									
+									STRING:
+										<xs:element name="SampleString" type="xs:string" title="Sample String"/>
+										
+									INTEGER:
+										<xs:element name="SampleInteger" type="xs:int" title="Sample Integer"/>
+									
+									FLOATING POINT NUMBER:
+										<xs:element name="SampleFloat" type="xs:float" title="Sample Float" />
+										
+									BOOLEAN:
+										<xs:element name="SampleBoolean" type="xs:bool" title="Sample Boolean" />
+										
+									HTML TEXT: (*NOTE* This property can be found in PropertyDef.xsd)
+										<xs:element name="SampleHTMLText" type="htmlText" title="Sample HTML Text" />		
+										
+									DIGITAL JOIN:
+										<xs:element name="DigitalJoin" type="DigitalJoin" title="Sample Digital Join" />											
+							-->
+							<xs:element name="Color" type="Color" title="Color" />
+							<xs:element name="Alpha" type="xs:float" title="Alpha" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
