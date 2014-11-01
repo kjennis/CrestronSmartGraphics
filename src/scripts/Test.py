@@ -5,6 +5,7 @@ import shutil
 cwdPath = os.getcwd()
 absPath = os.path.abspath(os.path.join(cwdPath, '..'))
 binPath = cwdPath + "\\" + "bin\\"
+testPath = cwdPath + "\\" + "test\\test\\"
 projectName = cwdPath.replace(absPath + '\\', '')
 
 print ("Found the current project name: " + projectName)
@@ -32,7 +33,7 @@ print ("Found SWF (" + projectName + ".swf)")
 
 print ("")
 print ("Copying files to test folder")
-shutil.copyfile(binPath + "\\" + swfName, "C:\\Crestron\\Smart Graphics\\TEST\\Test\\swf\\controls\\" + swfName)
+shutil.copyfile(binPath + "\\" + swfName, testPath + "swf\\controls\\" + swfName)
 
 print ("")
 print ("Deployment of " + projectName + " complete!")
