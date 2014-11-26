@@ -16,7 +16,7 @@
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="src" />
-    <class path="..\..\..\..\..\..\..\..\Crestron\Smart Objects\sdk2.03\src" />
+    <class path="..\..\..\..\..\..\..\..\Crestron\Smart Objects\sdk2.04\src" />
   </classpaths>
   <!-- Build options -->
   <build>
