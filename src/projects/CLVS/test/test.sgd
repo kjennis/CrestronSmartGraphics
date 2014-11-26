@@ -1,0 +1,110 @@
+[
+ObjTp=FSgntr
+Sgntr=SGD
+RelVrs=1
+VTProeVer=5.5.11
+]
+;================================================================================
+[
+ObjTp=Hd
+ProjectFile=test.vtp
+VtpGuid=C9CB16F9-0C36-44F8-9B89-FA3F59BDEE3B
+]
+;================================================================================
+[
+ObjTp=Symbol
+Name=test_Page1_Custom Layout Video Switcher.ced
+Hint=Custom Layout Video Switcher (Smart Object ID=1)
+Code=1
+GUID=E9DEE80C-484F-4C53-8AF1-623A20028F89
+SmplCName=test_Page1_Custom Layout Video Switcher.ced
+SMWRev=4.02.19
+Expand=expand_random
+;Define the number of inputs, outputs and parameters
+MinVariableInputs=5
+MaxVariableInputs=5
+MinVariableOutputs=5
+MaxVariableOutputs=5
+NumFixedParams=1
+MinVariableInputsList2=6
+MaxVariableInputsList2=6
+MinVariableOutputsList2=6
+MaxVariableOutputsList2=6
+MinVariableInputsList3=0
+MaxVariableInputsList3=0
+MinVariableOutputsList3=0
+MaxVariableOutputsList3=0
+;Define the cues, and signal types  each input, output and parameter.
+InputCue1=[~UNUSED3~]
+InputSigType1=Digital
+OutputCue1=Screen 1 Source Changed
+OutputSigType1=Digital
+InputCue2=[~UNUSED3~]
+InputSigType2=Digital
+OutputCue2=Screen 2 Source Changed
+OutputSigType2=Digital
+InputCue3=[~UNUSED3~]
+InputSigType3=Digital
+OutputCue3=Screen 3 Source Changed
+OutputSigType3=Digital
+InputCue4=[~UNUSED3~]
+InputSigType4=Digital
+OutputCue4=Screen 4 Source Changed
+OutputSigType4=Digital
+InputCue5=[~UNUSED3~]
+InputSigType5=Digital
+OutputCue5=Screen 5 Source Changed
+OutputSigType5=Digital
+InputList2Cue1=Number of visible screens
+InputList2SigType1=Analog
+OutputList2Cue1=[~UNUSED3~]
+OutputList2SigType1=Analog
+InputList2Cue2=Screen 1 Source Selection
+InputList2SigType2=Analog
+OutputList2Cue2=Screen 1 Source Selection
+OutputList2SigType2=Analog
+InputList2Cue3=Screen 2 Source Selection
+InputList2SigType3=Analog
+OutputList2Cue3=Screen 2 Source Selection
+OutputList2SigType3=Analog
+InputList2Cue4=Screen 3 Source Selection
+InputList2SigType4=Analog
+OutputList2Cue4=Screen 3 Source Selection
+OutputList2SigType4=Analog
+InputList2Cue5=Screen 4 Source Selection
+InputList2SigType5=Analog
+OutputList2Cue5=Screen 4 Source Selection
+OutputList2SigType5=Analog
+InputList2Cue6=Screen 5 Source Selection
+InputList2SigType6=Analog
+OutputList2Cue6=Screen 5 Source Selection
+OutputList2SigType6=Analog
+ParamCue1=SmartObjectId
+ParamSigType1=Constant
+MPp=1
+Pp1=1
+CedH=1
+SmartObjId=1d
+]
+; Parameter Properties for Smart Object ID
+[
+ObjTp=Dp
+H=1
+Tp=1
+HD=TRUE
+DV=1d
+NF=1
+DNF=1
+EncFmt=0
+DVLF=1
+Sgn=0
+]
+; Smart Objects Definition section
+[
+ObjTp=CED
+H=1
+Name=test_Page1_Custom Layout Video Switcher.ced
+;Cedver is the version of the Smart Graphics control, not the CED file format.
+;If the control definition changes, increment this.
+CedVer=1
+]
