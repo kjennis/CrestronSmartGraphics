@@ -3,7 +3,7 @@
 	<TargetXSD>CustomLayout VideoSwitcher.xsd</TargetXSD>
 	<ControlName>Custom Layout Video Switcher</ControlName>
 	<HelpID>16</HelpID>
-	<MobileAppIncluded>true</MobileAppIncluded>
+	<MobileAppIncluded>false</MobileAppIncluded>
 	<CategoryName>Widgets</CategoryName>
 	<ControlSummary><![CDATA[The Video Switcher widget combines a scrolling list with drag and drop functionality geared towards controlling video sources in a switcher matrix.  Assigning a Smart Object ID enables full control over the number of screens, source assignments, and provides feedback to the control system when a source changes on the touch panel. ]]></ControlSummary>
 	<Thumbnail>CustomLayout VideoSwitcher.png</Thumbnail>
