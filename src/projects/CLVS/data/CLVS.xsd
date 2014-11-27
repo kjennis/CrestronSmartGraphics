@@ -42,6 +42,16 @@
 						<xs:documentation>You may optionally select a digital join to receive feedback from the control system. When the signal is low, the button will not be displayed and the area will not be pressable. NOTE: If a join is selected, the associated signal must be high to display the image. If no join is selected, the button will always be displayed.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
+				
+				<xs:element canProgram="false" hidden="false" name="UseIndirectPositioning" readOnly="false" title="Use Indirect Positioning" type="xs:Boolean">
+					<xs:annotation>
+						<xs:documentation>When enabled will use the analog position and size signals to position the screens around the canvas.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				
+				<xs:element name="RedrawScreensJoin" type="EncapsulatedJoin" propertyType="EncapsulatedJoin" title="Redraw Screen Join" canProgram="false" hidden="true" readOnly="false" forUser="PowerUser" />
+				<xs:element name="ScreenSwitching" type="EncapsulatedJoin" propertyType="EncapsulatedJoin" title="Screen Switching Join" canProgram="false" hidden="true" readOnly="false" forUser="PowerUser" />			
+			
 			  <xs:element name="ListProperties" type="Group" title="List Properties">
 					<xs:complexType>
 						<xs:sequence>
@@ -195,7 +205,14 @@
 			  <xs:element name="Screens" type="Group" title="Screens">
                 <xs:complexType>
                   <xs:sequence>
-					<xs:element name="ScreenSwitching" type="JoinCommand" title="Screen Switching Analog" canProgram="false" hidden="true" readOnly="false" propertyType="JoinCommand" />
+				  
+				  <xs:element name="SourceChanged" type="EncapsulatedJoinGroup" propertyType="EncapsulatedJoinGroup" title="Source Changed Join Group" canProgram="false" hidden="true" readOnly="false" forUser="PowerUser" groupDependency="Screens" />
+				  <xs:element name="SourceSelection" type="EncapsulatedJoinGroup" propertyType="EncapsulatedJoinGroup" title="Source Selection Join Group" canProgram="false" hidden="true" readOnly="false" forUser="PowerUser" groupDependency="Screens" />
+				  <xs:element name="ScreenTopLocations" type="EncapsulatedJoinGroup" propertyType="EncapsulatedJoinGroup" title="Screen Top Location Join Group" canProgram="false" hidden="true" readOnly="false" forUser="PowerUser" groupDependency="Screens" />
+				  <xs:element name="ScreenLeftLocations" type="EncapsulatedJoinGroup" propertyType="EncapsulatedJoinGroup" title="Screen Left Location Join Group" canProgram="false" hidden="true" readOnly="false" forUser="PowerUser" groupDependency="Screens" />
+				  <xs:element name="ScreenWidths" type="EncapsulatedJoinGroup" propertyType="EncapsulatedJoinGroup" title="Screen Width Join Group" canProgram="false" hidden="true" readOnly="false" forUser="PowerUser" groupDependency="Screens" />
+				  <xs:element name="ScreenHeights" type="EncapsulatedJoinGroup" propertyType="EncapsulatedJoinGroup" title="Screen Height Join Group" canProgram="false" hidden="true" readOnly="false" forUser="PowerUser" groupDependency="Screens" />
+				  
 					<xs:element name="ScreenStyle" type="Style" title="Screen Style" canProgram="false" hidden="false" readOnly="false" categoryName="Backgrounds" propertyType="Style" >
 						<xs:annotation>
 							<xs:documentation>The styled graphics and font styling informatiojn that determine the look/feel of the screen image and the screen label text.  This style should contain a single screen image.</xs:documentation>
@@ -270,8 +287,6 @@
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
-                          <xs:element name="SourceSelection" type="JoinCommand" title="Source Selection" canProgram="false" hidden="true" readOnly="false" propertyType="JoinCommand" />
-						  <xs:element name="SourceChanged" type="JoinCommand" title="Source Changed" canProgram="false" hidden="true" readOnly="false" propertyType="JoinCommand" />
                         </xs:sequence>
                       </xs:complexType>
                     </xs:element>

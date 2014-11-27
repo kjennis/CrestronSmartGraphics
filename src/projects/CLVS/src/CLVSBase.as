@@ -26,7 +26,8 @@ package
 	
 	public class CLVSBase extends BaseObject
 	{
-		protected var _dragAndDrop:CLVS;
+		protected var _clvs:CLVS;
+		protected var _clvsJoinController:CLVSJoinController;
 		
 		/****************************************************************************
 		   Constructor: DragAndDropControlBase
@@ -139,9 +140,9 @@ package
 			dragAndDropData.screenStyle 		= screensArr["ScreenStyle"] ? screensArr["ScreenStyle"][0] : propertyArr["ScreenStyle"][0];
 			
 			//new up our drag and drop
-			_dragAndDrop = new CLVS(controlWidth, controlHeight, systemServiceManager, dragAndDropData);
+			_clvs = new CLVS(controlWidth, controlHeight, systemServiceManager, dragAndDropData);
 			
-			addChild(_dragAndDrop);
+			addChild(_clvs);
 			
 			var index:int = 1;
 			
@@ -206,24 +207,37 @@ package
 					dragAndDropIconData.subpageRefSerialJoinOffset = serialOffset;
 				}				
 				
-				var dragAndDropSource:DragAndDropIcon 			= _dragAndDrop.createListItem(dragAndDropIconData);
+				var dragAndDropSource:DragAndDropIcon 			= _clvs.createListItem(dragAndDropIconData);
 				//create a join controller to handle cip tag joins	
 				dragAndDropSource.cipJoinController = new CIPJoinController(systemServiceManager, dragAndDropSource.formattedTextObj);
 				//add our icons here
-				_dragAndDrop.addIcon(dragAndDropSource);
+				_clvs.addIcon(dragAndDropSource);
 			}
 			
-			//get our join values
-			var controlJoin:int = propertyArr["ControlJoin"];
-			var analogScreenNumberJoin:int = screensArr["ScreenSwitching"] ? screensArr["ScreenSwitching"]["JoinNumber"] : 0;
-			var digitalVisibilityJoin:int = propertyArr["DigitalVisibilityJoin"] != null ? propertyArr["DigitalVisibilityJoin"] : 0;
-			var digitalEnableJoin:int = propertyArr["DigitalEnableJoin"] != null ? propertyArr["DigitalEnableJoin"] : 0;
-			
 			//create our drag an drop join controller
-			var dragAndDropJoinController:DragAndDropJoinController = new DragAndDropJoinController(systemServiceManager, _dragAndDrop, controlJoin, analogScreenNumberJoin, screenAnalogArr, screenDigitalArr, digitalEnableJoin, digitalVisibilityJoin);
+			
+			var clvsJoinsObject:CLVSJoinsObject					= new CLVSJoinsObject();
+			clvsJoinsObject.controlJoin							= _propertyArr["ControlJoin"];
+			clvsJoinsObject.enableJoin							= _propertyArr["DigitalEnableJoin"];
+			clvsJoinsObject.visibilityJoin 						= _propertyArr["DigitalVisibilityJoin"];
+			
+			clvsJoinsObject.useIndirectPositioning 				= _propertyArr["UseIndirectPositioning"];
+			clvsJoinsObject.screenCount							= _propertyArr["Screens"]["ScreenCount"];
+			clvsJoinsObject.redrawScreenJoin					= _propertyArr["RedrawScreensJoin"]["JoinNumber"];
+			clvsJoinsObject.numberOfVisibleScreensJoin			= _propertyArr["ScreenSwitching"]["JoinNumber"];
+			
+			var encapsulatedJoinGroupsArr:Array					= _propertyArr["Screens"];
+			clvsJoinsObject.sourceChangedStartJoin				= (encapsulatedJoinGroupsArr["SourceChanged"][0] as EncapsulatedJoinGroupObject).joinNumber;
+			clvsJoinsObject.sourceSelectionStartJoin			= (encapsulatedJoinGroupsArr["SourceSelection"][0] as EncapsulatedJoinGroupObject).joinNumber;
+			clvsJoinsObject.screenTopLocationStartJoin			= (encapsulatedJoinGroupsArr["ScreenTopLocations"][0] as EncapsulatedJoinGroupObject).joinNumber;
+			clvsJoinsObject.screenLeftLocationStartJoin			= (encapsulatedJoinGroupsArr["ScreenLeftLocations"][0] as EncapsulatedJoinGroupObject).joinNumber;
+			clvsJoinsObject.screenWidthStartJoin				= (encapsulatedJoinGroupsArr["ScreenWidths"][0] as EncapsulatedJoinGroupObject).joinNumber;
+			clvsJoinsObject.screenHeightStartJoin				= (encapsulatedJoinGroupsArr["ScreenHeights"][0] as EncapsulatedJoinGroupObject).joinNumber;
+			
+			_clvsJoinController = new CLVSJoinController(systemServiceManager, _clvs, clvsJoinsObject, screenAnalogArr, screenDigitalArr);
 			
 			//create our CIP join controlers for the screens
-			for each(var dragAndDropScreen:DragAndDropScreen in _dragAndDrop.droppableTargets)
+			for each(var dragAndDropScreen:DragAndDropScreen in _clvs.droppableTargets)
 			{
 				if (dragAndDropScreen.formattedTextObj)
 				{
@@ -231,13 +245,13 @@ package
 				}
 			}
 			
-			_dragAndDrop.reorganizeLayout();
+			_clvs.reorganizeLayout();
 			
 			//scroll to the preview state
 			if (systemServiceManager.systemEventService.environmentData.environmentMode == EnvironmentMode.DESIGN)
 			{
-				_dragAndDrop.scrollSpeed = 0;
-				_dragAndDrop.scrollToItemIndex(previewState);
+				_clvs.scrollSpeed = 0;
+				_clvs.scrollToItemIndex(previewState);
 			}
 		}
 		
@@ -250,7 +264,7 @@ package
 		 **********************************************************************************/
 		public override function get width():Number
 		{
-			return _dragAndDrop ? _dragAndDrop.width : 0;
+			return _clvs ? _clvs.width : 0;
 		}
 		
 		/**********************************************************************************
@@ -262,22 +276,22 @@ package
 		 **********************************************************************************/
 		public override function get height():Number
 		{
-			return _dragAndDrop ? _dragAndDrop.height : 0;
+			return _clvs ? _clvs.height : 0;
 		}
 	
 		public override function set width(value:Number):void
 		{
-			if (_dragAndDrop)
+			if (_clvs)
 			{
-				_dragAndDrop.width = value;
+				_clvs.width = value;
 			}
 		}
 		
 		public override function set height(value:Number):void
 		{
-			if (_dragAndDrop)
+			if (_clvs)
 			{
-				_dragAndDrop.height = value;
+				_clvs.height = value;
 			}
 		}
 	}

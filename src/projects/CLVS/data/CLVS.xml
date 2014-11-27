@@ -47,6 +47,22 @@
     <ControlJoin>0</ControlJoin>
 	<DigitalEnableJoin>0</DigitalEnableJoin>
 	<DigitalVisibilityJoin>0</DigitalVisibilityJoin>
+	
+	<UseIndirectPositioning>false</UseIndirectPositioning>
+	
+	<RedrawScreensJoin Type="EncapsulatedJoin">
+        <JoinNumber>1</JoinNumber>
+        <JoinType>Digital</JoinType>
+        <Direction>In</Direction>
+        <InCueName>Redraw Screens</InCueName>
+    </RedrawScreensJoin>
+    <ScreenSwitching Type="EncapsulatedJoin">
+        <JoinNumber>1</JoinNumber>
+        <JoinType>Analog</JoinType>
+        <Direction>In</Direction>
+        <InCueName>Number of visible screens</InCueName>
+    </ScreenSwitching>
+	
     <ListProperties>
       <ListPosition>Top</ListPosition>
 	  <ListLength>100</ListLength>
@@ -196,6 +212,55 @@
       </Source>
     </Sources>
     <Screens>
+		<SourceChanged Type="EncapsulatedJoinGroup">
+			<StartJoinNumber>11</StartJoinNumber>
+			<NumReservedJoins>100</NumReservedJoins>
+			<JoinType>Digital</JoinType>
+			<Direction>Out</Direction>
+			<GroupName>Source Changed</GroupName>
+			<OutCueName>Screen %i Source Changed</OutCueName>
+		</SourceChanged>
+		<SourceSelection Type="EncapsulatedJoinGroup">
+			<StartJoinNumber>11</StartJoinNumber>
+			<NumReservedJoins>100</NumReservedJoins>
+			<JoinType>Analog</JoinType>
+			<Direction>In/Out</Direction>
+			<GroupName>Source Selections</GroupName>
+			<InCueName>Screen %i Source Selection</InCueName>
+			<OutCueName>Screen %i Source Selection</OutCueName>
+		</SourceSelection>
+		<ScreenTopLocations Type="EncapsulatedJoinGroup">
+			<StartJoinNumber>111</StartJoinNumber>
+			<NumReservedJoins>100</NumReservedJoins>
+			<JoinType>Analog</JoinType>
+			<Direction>In</Direction>
+			<GroupName>ScreenTopLocations</GroupName>
+			<InCueName>Screen %i Top Location</InCueName>
+		</ScreenTopLocations>
+		<ScreenLeftLocations Type="EncapsulatedJoinGroup">
+			<StartJoinNumber>211</StartJoinNumber>
+			<NumReservedJoins>100</NumReservedJoins>
+			<JoinType>Analog</JoinType>
+			<Direction>In</Direction>
+			<GroupName>ScreenLeftLocations</GroupName>
+			<InCueName>Screen %i Left Location</InCueName>
+		</ScreenLeftLocations>
+		<ScreenWidths Type="EncapsulatedJoinGroup">
+			<StartJoinNumber>311</StartJoinNumber>
+			<NumReservedJoins>100</NumReservedJoins>
+			<JoinType>Analog</JoinType>
+			<Direction>In</Direction>
+			<GroupName>ScreenWidths</GroupName>
+			<InCueName>Screen %i Width</InCueName>
+		</ScreenWidths>
+		<ScreenHeights Type="EncapsulatedJoinGroup">
+			<StartJoinNumber>411</StartJoinNumber>
+			<NumReservedJoins>100</NumReservedJoins>
+			<JoinType>Analog</JoinType>
+			<Direction>In</Direction>
+			<GroupName>ScreenHeights</GroupName>
+			<InCueName>Screen %i Height</InCueName>
+		</ScreenHeights>
       <ScreenStyle Type="Style" categoryName="Backgrounds" title="Screen Style">
         <StyleID>0</StyleID>
       </ScreenStyle>
