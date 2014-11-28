@@ -83,9 +83,9 @@ package
 			for each (var screen:Array in screensArr["Screen"])
 			{
 				screenLabelArr.push(screen["Name"]);
-				screenAnalogArr.push(int(screen["SourceSelection"] ? screen["SourceSelection"]["JoinNumber"] : 0));
-				//Populate digital array
-				screenDigitalArr.push(int(screen["SourceChanged"] ? screen["SourceChanged"]["JoinNumber"] : 0));
+				//screenAnalogArr.push(int(screen["SourceSelection"] ? screen["SourceSelection"]["JoinNumber"] : 0));
+				////Populate digital array
+				//screenDigitalArr.push(int(screen["SourceChanged"] ? screen["SourceChanged"]["JoinNumber"] : 0));
 			}
 			
 			var listPosition:String 			= String(listPropertiesArr["ListPosition"]).toLowerCase();
@@ -233,6 +233,16 @@ package
 			clvsJoinsObject.screenLeftLocationStartJoin			= (encapsulatedJoinGroupsArr["ScreenLeftLocations"][0] as EncapsulatedJoinGroupObject).joinNumber;
 			clvsJoinsObject.screenWidthStartJoin				= (encapsulatedJoinGroupsArr["ScreenWidths"][0] as EncapsulatedJoinGroupObject).joinNumber;
 			clvsJoinsObject.screenHeightStartJoin				= (encapsulatedJoinGroupsArr["ScreenHeights"][0] as EncapsulatedJoinGroupObject).joinNumber;
+			
+			for (var i:int = 0; i < clvsJoinsObject.screenCount; i++) 
+			{
+				screenAnalogArr.push(clvsJoinsObject.sourceSelectionStartJoin + i);
+				screenDigitalArr.push(clvsJoinsObject.sourceChangedStartJoin + i);
+			}
+			
+			screenAnalogArr.push(int(screen["SourceSelection"] ? screen["SourceSelection"]["JoinNumber"] : 0));
+				//Populate digital array
+				screenDigitalArr.push(int(screen["SourceChanged"] ? screen["SourceChanged"]["JoinNumber"] : 0));
 			
 			_clvsJoinController = new CLVSJoinController(systemServiceManager, _clvs, clvsJoinsObject, screenAnalogArr, screenDigitalArr);
 			

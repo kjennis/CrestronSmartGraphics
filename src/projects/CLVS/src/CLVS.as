@@ -1,14 +1,16 @@
 package  
 {
 	import com.crestron.components.data.*;
-	import com.crestron.components.diagnostics.DiagnosticMessage;
+	import com.crestron.components.diagnostics.*;
 	import com.crestron.components.enums.*;
 	import com.crestron.components.interfaces.*;
 	import com.crestron.components.interfaces.views.*;
 	import com.crestron.components.objects.*;
 	import com.crestron.components.widgets.*;
 	import com.greensock.*;
-	import flash.geom.Rectangle;
+	import flash.display.*;
+	import flash.events.*;
+	import flash.utils.*;
 	/**
 	 * ...
 	 * @author Kim Jennis
@@ -19,6 +21,12 @@ package
 		protected var _screenPosAndSizeArrayRelative:Array = [];
 		protected var _screenPosAndSizeArrayAbsolute:Vector.<PosAndSizeData> = new Vector.<PosAndSizeData>();
 		protected var _diagnosticService:IDiagnosticService;
+		
+		//base calls the addScreens method twice on initialize, the first time we are not ready to check providing false negatives.
+		protected var _dontCheckLayoutOnInitialize:Boolean = true;
+		
+		protected var _invalidLayoutSprite:Sprite;
+		protected var _invalidLayoutTimer:Timer = new Timer(200);
 		
 		protected var _listLength:int;
 		protected var _listThickness:int;
@@ -35,14 +43,26 @@ package
 		{
 			_diagnosticService = systemServiceManager.diagnosticService;
 			
+			_invalidLayoutSprite = new Sprite();
+			_invalidLayoutSprite.graphics.beginFill(0xFF0000, 0.3);
+			_invalidLayoutSprite.graphics.drawRect(0, 0, w, h);
+			_invalidLayoutSprite.graphics.endFill();
+			
+			_invalidLayoutTimer.addEventListener(TimerEvent.TIMER, onFlashOverEvent);
+			
 			_screenPosAndSizeArrayRelative = dragAndDropData.screenPosAndSizeArray;
 			_listPosition = dragAndDropData.listPosition;			
 			_listLength = dragAndDropData.listLength;
 			_listThickness = dragAndDropData.listThickness;
 			
 			super(w, h, systemServiceManager, dragAndDropData);
-			
-			//layout();
+		}
+		
+		protected function onFlashOverEvent(e:TimerEvent):void 
+		{
+			_invalidLayoutTimer.stop();
+			if (contains(_invalidLayoutSprite))
+				removeChild(_invalidLayoutSprite);
 		}
 		
 		protected function layout():void 
@@ -111,9 +131,10 @@ package
 			var layoutOK:Boolean = true;
 			
 			//When designing we want the flexibility to move the screens arround freely at runtime the screens need to go through a check.
-			if (!_systemServiceManager.systemEventService.environmentData.environmentMode == EnvironmentMode.DESIGN)
+			if (!_systemServiceManager.systemEventService.environmentData.environmentMode == EnvironmentMode.DESIGN && !_dontCheckLayoutOnInitialize)
 				layoutOK = verifyLayout();
 				
+			_dontCheckLayoutOnInitialize = false;
 			//if the layout is not OK we fall back to the base class automated layout.
 			if (layoutOK)
 			{
@@ -122,7 +143,14 @@ package
 			else
 			{
 				super.addScreens(numVisibleScreens, resizeOnly);
+				layoutInvalidFlash();
 			}
+		}
+		
+		protected function layoutInvalidFlash():void 
+		{
+			addChild(_invalidLayoutSprite);
+			_invalidLayoutTimer.start();
 		}
 		
 		protected function addScreensCustom(numVisibleScreens:int, resizeOnly:Boolean = false):void
@@ -171,8 +199,6 @@ package
 			var errorMessage:DiagnosticMessage;
 			var noErrors:Boolean = true;
 			var posAndSize:PosAndSizeData = new PosAndSizeData();
-			
-			var rectVector:Vector.<Rectangle> = new Vector.<Rectangle>;
 			
 			for (var i:int = 0; i < _numVisibleScreens; i++)
 			{
@@ -231,34 +257,34 @@ package
 						noErrors = false;
 					}
 					
-					_screenPosAndSizeArrayAbsolute.push(posAndSize);
+					_screenPosAndSizeArrayAbsolute.push(posAndSize.clone());
 					
-					//Check if any of the screens overlap with the current screen.
-					//TODO: rewrite this, there are some scenario's not considered (screens are layed exactly on top of eachother, last screen is in the top left position.
-					//We basically need a check if any point(not just top left) falls between a rect, I want to avoid using the native flash displayobject hitdetection because of the overhead.
 					for (var j:int = 0; j < i; j++) 
 					{
-						if (posAndSize.left < _screenPosAndSizeArrayAbsolute[j].left + _screenPosAndSizeArrayAbsolute[j].width && posAndSize.left > _screenPosAndSizeArrayAbsolute[j].left)
+						if (posAndSize.left >= _screenPosAndSizeArrayAbsolute[j].left + _screenPosAndSizeArrayAbsolute[j].width || _screenPosAndSizeArrayAbsolute[j].left >= posAndSize.left + posAndSize.width)
 						{
-							//The left coordinate of our new screen falls within that of an already existing screen, we might have an overlap.
-							if (posAndSize.top < _screenPosAndSizeArrayAbsolute[j].top + _screenPosAndSizeArrayAbsolute[j].height && posAndSize.top > _screenPosAndSizeArrayAbsolute[j].top)
-							{
-								//Our top coordinate also overlaps with this existing screen, we have an overlap.
-								errorMessage = new DiagnosticMessage(DiagnosticMessage.ERROR, "screen " + (i+1) + " overlaps with screen " + (j+1))
-								_diagnosticService.log(errorMessage);
-								noErrors = false;
-							}
+							//Screens don't overlap horizontally.
+							break;
 						}
+						if (posAndSize.top >= _screenPosAndSizeArrayAbsolute[j].top + _screenPosAndSizeArrayAbsolute[j].height || _screenPosAndSizeArrayAbsolute[j].top >= posAndSize.top + posAndSize.height)
+						{
+							//Screens don't overlap vertically.
+							break;
+						}
+							errorMessage = new DiagnosticMessage(DiagnosticMessage.ERROR, "screen " + (i+1) + " overlaps with screen " + (j+1))
+							_diagnosticService.log(errorMessage);
+							noErrors = false;
 					}
+					
 				}
 				
 			}
 			return noErrors
 		}
 		
-		public function redrawScreens(numVisibleScreens:int):void
+		public function redrawScreens():void
 		{
-			addScreens(numVisibleScreens);
+			addScreens(_numVisibleScreens);
 		}
 	
 		public function newScreenTopPosition(screenIndex:int, value:int):void

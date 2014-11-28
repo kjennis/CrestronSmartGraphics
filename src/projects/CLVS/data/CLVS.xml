@@ -269,12 +269,6 @@
       <LocalMode>true</LocalMode>
       <EnforceGeometry>true</EnforceGeometry>
       <ScreenAspectRatio>Stretch</ScreenAspectRatio>
-      <ScreenSwitching Type="JoinCommand">
-        <JoinType>Analog</JoinType>
-        <Direction>In</Direction>
-        <JoinNumber>1</JoinNumber>
-        <SignalName>Number of visible screens</SignalName>
-      </ScreenSwitching>
       <ScreenCount>2</ScreenCount>
 	  <ColumnCount>0</ColumnCount>
       <Screen uid="0">
@@ -285,18 +279,6 @@
 			<Width>20</Width>
 			<Height>11</Height>
 		</ScreenPositionAndSize>
-        <SourceSelection Type="JoinCommand">
-          <JoinType>Analog</JoinType>
-          <Direction>In/Out</Direction>
-          <JoinNumber>2</JoinNumber>
-          <SignalName>Screen %i Source Selection</SignalName>
-        </SourceSelection>
-		<SourceChanged Type="JoinCommand">
-          <JoinType>Digital</JoinType>
-          <Direction>Out</Direction>
-          <JoinNumber>1</JoinNumber>
-          <SignalName>Screen %i Source Changed</SignalName>
-        </SourceChanged>
       </Screen>
       <Screen uid="1">
         <Name>Screen Name</Name>
@@ -306,18 +288,6 @@
 			<Width>20</Width>
 			<Height>11</Height>
 		</ScreenPositionAndSize>
-        <SourceSelection Type="JoinCommand">
-          <JoinType>Analog</JoinType>
-          <Direction>In/Out</Direction>
-          <JoinNumber>3</JoinNumber>
-          <SignalName>Screen %i Source Selection</SignalName>
-        </SourceSelection>
-		<SourceChanged Type="JoinCommand">
-          <JoinType>Digital</JoinType>
-          <Direction>Out</Direction>
-          <JoinNumber>2</JoinNumber>
-          <SignalName>Screen %i Source Changed</SignalName>
-        </SourceChanged>
       </Screen>
     </Screens>
   </Properties>

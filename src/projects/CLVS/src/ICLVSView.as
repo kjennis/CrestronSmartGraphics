@@ -6,7 +6,7 @@ package
 	 */
 	public interface ICLVSView 
 	{
-		function redrawScreens(numVisibleScreens:int):void;
+		function redrawScreens():void;
 	
 		function newScreenTopPosition(screenIndex:int, value:int):void;
 		function newScreenLeftPosition(screenIndex:int, value:int):void;

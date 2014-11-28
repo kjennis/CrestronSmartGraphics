@@ -2,6 +2,7 @@ package
 {
 	import com.crestron.components.controllers.*;
 	import com.crestron.components.enums.EnvironmentMode;
+	import com.crestron.components.events.SourceDropEvent;
 	import com.crestron.components.interfaces.*;
 	import com.crestron.components.interfaces.views.*;
 	import com.crestron.components.joins.JoinTypes;
@@ -48,6 +49,11 @@ package
 			subscribeJoins();
 		}
 		
+		protected function onSourceDropped(e:SourceDropEvent):void 
+		{
+			
+		}
+		
 		protected function subscribeJoins():void 
 		{
 			_joinService.publishJoin(JoinTypes.DIGITAL, _redrawScreenJoin, this);
@@ -74,7 +80,7 @@ package
 			if (joinType == JoinTypes.DIGITAL && joinNumber == _redrawScreenJoin && int(joinValue) == 1)
 			{
 				//TODO: Use the incomming analog join for set number of screens instead of design time static.
-				(_dragAndDropView as ICLVSView).redrawScreens(_screenCount);
+				(_dragAndDropView as ICLVSView).redrawScreens();
 			}
 			
 			if (joinType == JoinTypes.ANALOG)
