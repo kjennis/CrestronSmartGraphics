@@ -221,7 +221,7 @@ package
 			clvsJoinsObject.enableJoin							= _propertyArr["DigitalEnableJoin"];
 			clvsJoinsObject.visibilityJoin 						= _propertyArr["DigitalVisibilityJoin"];
 			
-			clvsJoinsObject.useIndirectPositioning 				= _propertyArr["UseIndirectPositioning"];
+			clvsJoinsObject.useIndirectPositioning 				= String(listPropertiesArr["useIndirectPositioning"]).toLowerCase() == "true";
 			clvsJoinsObject.screenCount							= _propertyArr["Screens"]["ScreenCount"];
 			clvsJoinsObject.redrawScreenJoin					= _propertyArr["RedrawScreensJoin"]["JoinNumber"];
 			clvsJoinsObject.numberOfVisibleScreensJoin			= _propertyArr["ScreenSwitching"]["JoinNumber"];

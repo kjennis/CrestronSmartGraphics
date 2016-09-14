@@ -3,6 +3,7 @@ package
 	import com.crestron.components.data.*;
 	import com.crestron.components.diagnostics.*;
 	import com.crestron.components.enums.*;
+	import com.crestron.components.events.SourceDropEvent;
 	import com.crestron.components.interfaces.*;
 	import com.crestron.components.interfaces.views.*;
 	import com.crestron.components.objects.*;
@@ -207,7 +208,7 @@ package
 					posAndSize.width = _screenPosAndSizeArrayRelative[i]["ScreenWidth"] / 100 * (_canvasWidth);
 					posAndSize.height = _screenPosAndSizeArrayRelative[i]["ScreenHeight"]/100*(_canvasHeight);
 					posAndSize.top = _canvasHeight *_screenPosAndSizeArrayRelative[i]["ScreenTop"]/100 + _canvasY;
-					posAndSize.left = _canvasWidth * _screenPosAndSizeArrayRelative[i]["ScreenLeft"]/100 + _canvasX;
+					posAndSize.left = _canvasWidth * _screenPosAndSizeArrayRelative[i]["ScreenLeft"]/100;
 					
 					//Check if screen is wide enough.
 					if (posAndSize.width < _minScreenWidth)
@@ -280,6 +281,72 @@ package
 				
 			}
 			return noErrors
+		}
+		
+		override public function set visibleScreens(numVisibleScreens:int):void
+		{
+			//we cant have more screens visible than our max number of screens
+			if (numVisibleScreens >= _numScreens || numVisibleScreens <= 0)
+				numVisibleScreens = _numScreens;
+				
+			_numVisibleScreens = numVisibleScreens;
+				
+			//remove all our screens from the stage
+			var screenCounter:int = _numScreens;
+
+			for each (var removableScreen:DragAndDropScreen in _screenArr)
+			{
+				if (contains(removableScreen))
+				{
+					//if the screen isnt on the screen right now, remove the icon.
+					
+					var index:int = _screenArr.indexOf(removableScreen)
+					if (index >= numVisibleScreens)
+					{
+						removableScreen.removeSourceFromScreen(false);
+						//removeChild(removableScreen.sourceIcon);
+						//removableScreen.sourceIcon
+						//removableScreen.dispatchEvent(new SourceDropEvent(removableScreen.screenIndex, 0));
+					}
+							
+					TweenLite.to(removableScreen, .20, {alpha: 0, onCompleteParams: [removableScreen], onComplete: function(params:DragAndDropScreen):void
+					{
+						// in case this callback gets called after the parent object is destroyed,
+						// after rotation in design time.  Then there is no parent to call removeChild on.
+						if ((params as DragAndDropScreen).parent == null)
+						{
+							return;
+					}
+							
+						removeChild(params);
+						screenCounter--;
+						
+						//add our screens back in
+						if (screenCounter == 0)
+						{
+							addScreens(numVisibleScreens);
+						}
+					}});
+					
+				}
+				else
+				{
+					screenCounter--;
+					if (screenCounter == 0)
+					{
+						addScreens(numVisibleScreens);
+					}
+				}
+				
+			}
+			
+			for each (var targetScreen:DragAndDropScreen in _screenArr)
+			{
+				for each(var source:DragAndDropIcon in _sourceArr)
+				{
+					targetScreen.sourceIcon = source.clone();
+				}
+			}
 		}
 		
 		public function redrawScreens():void

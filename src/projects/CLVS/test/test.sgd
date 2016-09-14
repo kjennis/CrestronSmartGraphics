@@ -1,8 +1,10 @@
 [
 ObjTp=FSgntr
 Sgntr=SGD
-RelVrs=1
-VTProeVer=5.5.11
+RelVrs=3
+VTProeVer=6.0.05
+Schema=1
+CRCGUID=D3A872CB-B884-4452-8196-0365CA3719B3
 ]
 ;================================================================================
 [
@@ -16,10 +18,13 @@ ObjTp=Symbol
 Name=test_Page1_Custom Layout Video Switcher.ced
 Hint=Custom Layout Video Switcher (Smart Object ID=1)
 Code=1
+SGControlType=Custom Layout Video Switcher
+SGControlName=Custom Layout Video Switcher
 GUID=5F753A36-7547-4F52-BB67-1C8C8C568AE7
 SmplCName=test_Page1_Custom Layout Video Switcher.ced
 SMWRev=4.02.20
 Expand=expand_random
+HelpID=10016
 Render=8
 ;Define the number of inputs, outputs and parameters
 MinVariableInputs=112

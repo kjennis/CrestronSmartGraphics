@@ -25,6 +25,8 @@ package
 		protected var _screenWidthStartJoin:int;
 		protected var _screenHeightStartJoin:int;
 		
+		protected var _prevIconArray:Array = [];
+		
 		public function CLVSJoinController(systemServiceManager:ISystemServiceManager, dragAndDropView:IDragAndDropView, clvsJoinsObject:CLVSJoinsObject, screenJoinArray:Array, screenDigitalArray:Array = null) 
 		{
 			_systemServiceManager = systemServiceManager;
@@ -102,6 +104,24 @@ package
 				{
 					(_dragAndDropView as ICLVSView).newScreenHeight(joinNumber - _screenHeightStartJoin, int(joinValue));
 				}
+				/*
+				else if (inRange(_sourceSelectionStartJoin, joinNumber, _sourceSelectionStartJoin + _screenCount))
+				{
+					_prevIconArray[joinNumber - _sourceSelectionStartJoin] = int(joinValue);
+				}
+				
+				else if (joinNumber == _analogScreenNumberJoin)
+				{
+					var numScreens:int = int(joinValue);
+					
+					_dragAndDropView.visibleScreens = numScreens;
+					
+					for (var i:int = 0; i < numScreens; i++) 
+					{
+						_dragAndDropView.setSource(i, _prevIconArray[i]);
+					}
+				}
+				*/
 			}
 			
 			super.joinIn(joinType, joinNumber, joinValue);
